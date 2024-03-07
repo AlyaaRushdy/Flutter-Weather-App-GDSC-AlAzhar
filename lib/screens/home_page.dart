@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
         title: const Text("Weather App"),
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
       ),
       body: const Padding(
