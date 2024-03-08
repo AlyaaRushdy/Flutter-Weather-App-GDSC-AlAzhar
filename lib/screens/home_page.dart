@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/screens/search_page.dart';
+import 'package:weather_app/widgets/no_result_widget.dart';
+import 'package:weather_app/widgets/weather_data_container.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool dataLoaded = true;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -25,18 +29,15 @@ class HomePage extends StatelessWidget {
           ),
         ],
         title: const Text("Weather App"),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor:
+            dataLoaded ? Colors.orange : Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(20),
-        child: Center(
-          child: Text(
-            "There's No Result 😔 Try Searching From The Above Search Icon 🔍",
-            style: TextStyle(fontSize: 22),
-          ),
+        //elevation: 1,
+        shape: Border(
+          bottom: BorderSide(width: 1, color: Colors.grey.shade700),
         ),
       ),
+      body: dataLoaded ? const WeatherDataContainer() : const NoResultWidget(),
     );
   }
 }
