@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubit/get_weather_cubit.dart';
+import 'package:weather_app/cubit/weather_state_cubit.dart';
 import 'package:weather_app/screens/search_page.dart';
 import 'package:weather_app/widgets/no_result_widget.dart';
 import 'package:weather_app/widgets/weather_data_container.dart';
@@ -8,8 +11,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool dataLoaded = true;
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -29,15 +30,20 @@ class HomePage extends StatelessWidget {
           ),
         ],
         title: const Text("Weather App"),
-        backgroundColor:
-            dataLoaded ? Colors.orange : Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
-        //elevation: 1,
-        shape: Border(
-          bottom: BorderSide(width: 1, color: Colors.grey.shade700),
-        ),
       ),
-      body: dataLoaded ? const WeatherDataContainer() : const NoResultWidget(),
+      body: BlocBuilder<GetWeatherCubit, WeatherStates>(
+        builder: (context, state) {
+          if (state is NoWeatherState) {
+            return const NoResultWidget();
+          } else if (state is WeatherSuccessState) {
+            return WeatherDataContainer(weatherModel: state.weatherModel);
+          } else {
+            return const Center(
+              child: Text("Oops! There was an error"),
+            );
+          }
+        },
+      ),
     );
   }
 }
