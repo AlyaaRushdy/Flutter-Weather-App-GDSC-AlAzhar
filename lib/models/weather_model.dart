@@ -19,7 +19,7 @@ class WeatherModel {
       lastUpdated: json['current']['last_updated'],
       temp: json['current']['temp_c'],
       condition: json['current']['condition']['text'],
-      image: json['current']['condition']['icon'],
+      image: "https:${json['current']['condition']['icon']}",
       minTemp: json['forecast']['forecastday'][0]['day']['mintemp_c'],
       maxTemp: json['forecast']['forecastday'][0]['day']['maxtemp_c'],
     );
